@@ -1,0 +1,41 @@
+= ActiveResource Throttle
+
+A throttler for ActiveResource requests.
+
+== DESCRIPTION:
+
+===Problem
+You're writing a library to consume a RESTful web service.  That service publishes
+a throttle limit. So you need to throttle your requests to prevent the dreaded 503.
+
+===Solution
+ActiveResource Throttle adds request throttling to ActiveResource.  Specify the limits in your ActiveResource base class, and no longer will your client code have to worry about the number and frequency of its requests. 
+
+==INSTALL:
+
+  gem sources -a http://gems.github.com
+  gem install aiaio-active_resource_throttle
+
+== USAGE:
+
+  require "active_resource_throttle"
+  
+  class MyResource < ActiveResource::Base
+    include ActiveResourceThrottle
+    self.site = "http://example.com/api/" 
+    throttle(:interval => 60, :requests => 20, :sleep_interval => 10)
+  end
+  
+  class Person < MyResource; end
+  class Post < MyResource; end
+  
+  
+1. Require activeresource_throttle.
+2. Include ActiveResourceThrottle in the ActiveResource class.  If you're creating a library to access several resources, <b>it's necessary to create a generic base class for the api</b> you're accessing.  Specify the site, login credentials, and throttle, and then subclass the base class for the various resources. Note that <b>the throttle will work across subclasses</b>.
+3. Invoke the #throttle class method with the required options *interval* and *requests*.  You may also specify a *sleep_interval*.  The settings in the example code above will allow for a maximum of 20 requests per minute. When that limit is reached, requests will be paused for 10 seconds.
+
+== ISSUES:
+
+ActiveResource Throttle will not work properly across multiple instances of ActiveResource (e.g., in a Rails application with more than one Mongrel).  At the moment, it should be used in single-process scripts.  Also, the gem is not yet threadsafe.
+
+Expect a threadsafe release in future versions.
