@@ -72,7 +72,7 @@ module ActiveResourceThrottle
     # Interrupts connection requests only if 
     # throttle is engaged.
     def connection_with_throttle(refresh = false)
-      throttle_connection_request if throttle_engaged?
+      throttle_connection_request if throttle_engaged? && base_class?
       connection_without_throttle(refresh)
     end
     
@@ -106,6 +106,13 @@ module ActiveResourceThrottle
         defined?(@throttle_interval) && defined?(@throttle_request_limit) &&
         throttle_interval.to_i > 0 && throttle_request_limit.to_i > 0
       end
+      
+      # Is this the class from which a connection will originate?
+      # See ActiveResource::Base.connection method for details. 
+      def base_class?
+        defined?(@connection) || superclass == Object
+      end
+      
       
   end
     
