@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README.rdoc</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README.rdoc</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README.rdoc
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Mon Jan 05 13:58:44 -0500 2009</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1>ActiveResource Throttle</h1>
+<p>
+A throttler for ActiveResource requests.
+</p>
+<h2>DESCRIPTION:</h2>
+<h3>Problem</h3>
+<p>
+You&#8216;re writing a library to consume a RESTful web service. That
+service publishes a throttle limit. So you need to throttle your requests
+to prevent the dreaded 503.
+</p>
+<h3>Solution</h3>
+<p>
+ActiveResource Throttle adds request throttling to ActiveResource. Specify
+the limits in your ActiveResource base class, and no longer will your
+client code have to worry about the number and frequency of its requests.
+</p>
+<h2>INSTALL:</h2>
+<pre>
+  gem sources -a http://gems.github.com
+  gem install aiaio-active_resource_throttle
+</pre>
+<h2>USAGE:</h2>
+<pre>
+  require &quot;active_resource_throttle&quot;
+
+  class MyResource &lt; ActiveResource::Base
+    include ActiveResourceThrottle
+    self.site = &quot;http://example.com/api/&quot;
+    throttle(:interval =&gt; 60, :requests =&gt; 20, :sleep_interval =&gt; 10)
+  end
+
+  class Person &lt; MyResource; end
+  class Post &lt; MyResource; end
+</pre>
+<ol>
+<li>Require activeresource_throttle.
+
+</li>
+<li>Include <a
+href="../classes/ActiveResourceThrottle.html">ActiveResourceThrottle</a> in
+the ActiveResource class. If you&#8216;re creating a library to access
+several resources, <b>it&#8216;s necessary to create a generic base class
+for the api</b> you&#8216;re accessing. Specify the site, login
+credentials, and throttle, and then subclass the base class for the various
+resources. Note that <b>the throttle will work across subclasses</b>.
+
+</li>
+<li>Invoke the throttle class method with the required options <b>interval</b>
+and <b>requests</b>. You may also specify a <b>sleep_interval</b>. The
+settings in the example code above will allow for a maximum of 20 requests
+per minute. When that limit is reached, requests will be paused for 10
+seconds.
+
+</li>
+</ol>
+<h2>ISSUES:</h2>
+<p>
+ActiveResource Throttle will not work properly across multiple instances of
+ActiveResource (e.g., in a Rails application with more than one Mongrel).
+At the moment, it should be used in single-process scripts. Also, the gem
+is not yet threadsafe.
+</p>
+<p>
+Expect a threadsafe release in future versions.
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
