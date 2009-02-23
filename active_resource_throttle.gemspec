@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name     = "active_resource_throttle"
-  s.version  = "1.0.0"
+  s.version  = "1.0.1"
   s.summary  = "A throttler for ActiveResource requests."
   s.authors  = ["Kyle Banker", "Alexander Interactive, Inc."]
   s.date     = "2008-12-16"
