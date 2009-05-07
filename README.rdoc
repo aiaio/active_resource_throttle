@@ -1,6 +1,6 @@
 = ActiveResource Throttle
 
-A throttler for ActiveResource requests.
+A rate limiter for ActiveResource requests.
 
 == DESCRIPTION:
 
